@@ -87,7 +87,7 @@ class AppFixtures extends Fixture
             $post->setAuthor($admin);
             $post->setCategory($categories[$i % count($categories)]);
             $post->setPublishedAt(new \DateTime('-' . $i . ' days'));
-            $post->setPicture('https://via.placeholder.com/500x300?text=' . urlencode($postTitles[$i]));
+            $post->setPicture('https://placehold.co/500x300?text=' . urlencode($postTitles[$i]));
             $manager->persist($post);
 
             // Add Comments
