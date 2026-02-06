@@ -52,6 +52,20 @@ class AdminUserController extends AbstractController
         return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{id}/toggle-active', name: 'app_admin_user_toggle_active', methods: ['POST'])]
+    public function toggleActive(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('toggle_active'.$user->getId(), $request->request->get('_token'))) {
+            $user->setIsActive(!$user->isActive());
+            $entityManager->flush();
+            
+            $status = $user->isActive() ? 'activé' : 'désactivé';
+            $this->addFlash('success', 'Compte utilisateur ' . $status . ' !');
+        }
+
+        return $this->redirectToRoute('app_admin_users_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}/delete', name: 'app_admin_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
