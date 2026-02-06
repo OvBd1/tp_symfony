@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès Refusé - MyBlog{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="card shadow-lg mt-5">
+            <div class="card-body p-5">
+                <div class="mb-4">
+                    <i class="bi bi-shield-exclamation text-danger" style="font-size: 5rem;"></i>
+                </div>
+                
+                <h1 class="display-4 text-danger mb-4">Accès Refusé</h1>
+                
+                <p class="lead mb-4">
+                    Désolé, vous n'avez pas les droits nécessaires pour accéder à cette page.
+                </p>
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>Restrictions d'accès :</strong>
+                    <ul class="list-unstyled mt-2 mb-0">
+                        <li>Cette page peut nécessiter un rôle administrateur</li>
+                        <li>Votre compte doit peut-être être activé</li>
+                        <li>Vous devez être connecté pour accéder à cette ressource</li>
+                    </ul>
+                </div>
+
+                <div class="mt-4">
+                    {% if app.user %}
+                        <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg me-2">
+                            <i class="bi bi-house"></i> Retour à l'accueil
+                        </a>
+                        <a href="{{ path('app_profile_show') }}" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-person"></i> Mon Profil
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg me-2">
+                            <i class="bi bi-box-arrow-in-right"></i> Se connecter
+                        </a>
+                        <a href="{{ path('app_home') }}" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-house"></i> Retour à l'accueil
+                        </a>
+                    {% endif %}
+                </div>
+
+                <hr class="my-4">
+
+                <p class="text-muted small">
+                    Si vous pensez qu'il s'agit d'une erreur, veuillez contacter un administrateur.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
