@@ -35,12 +35,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/posts/new, roles: ROLE_ADMIN }
         - { path: ^/posts/[0-9]+/edit, roles: ROLE_ADMIN }
-        - { path: ^/posts/[0-9]+$, roles: PUBLIC_ACCESS }
-        - { path: ^/posts$, roles: PUBLIC_ACCESS }
         - { path: ^/comments/post/, roles: ROLE_USER }
         - { path: ^/comments/admin, roles: ROLE_ADMIN }
-        - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/login, roles: PUBLIC_ACCESS }
 
 when@test:
     security:

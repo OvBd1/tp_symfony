@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categories - MyBlog{% endblock %}
+{% block title %}Catégories - MyBlog{% endblock %}
 
 {% block body %}
 <div class="row mb-4">
     <div class="col-lg-10 mx-auto">
         <div class="d-flex justify-content-between align-items-center">
-            <h1>Categories</h1>
-            <a href="{{ path('app_category_new') }}" class="btn btn-primary">New Category</a>
+            <h1>Catégories</h1>
+            <a href="{{ path('app_category_new') }}" class="btn btn-primary">Nouvelle Catégorie</a>
         </div>
     </div>
 </div>
@@ -19,8 +19,8 @@
                 <table class="table table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>Name</th>
-                            <th>Posts Count</th>
+                            <th>Nom</th>
+                            <th>Nombre d'articles</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -32,11 +32,11 @@
                                     <span class="badge bg-info">{{ category.posts|length }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ path('app_category_show', {id: category.id}) }}" class="btn btn-sm btn-info">View</a>
-                                    <a href="{{ path('app_category_edit', {id: category.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ path('app_category_show', {id: category.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                                    <a href="{{ path('app_category_edit', {id: category.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
                                     <form method="post" action="{{ path('app_category_delete', {id: category.id}) }}" style="display:inline;">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr ?')">Supprimer</button>
                                     </form>
                                 </td>
                             </tr>
@@ -46,7 +46,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                No categories yet. <a href="{{ path('app_category_new') }}">Create one</a>
+                Aucune catégorie pour le moment. <a href="{{ path('app_category_new') }}">Créer une catégorie</a>
             </div>
         {% endif %}
     </div>

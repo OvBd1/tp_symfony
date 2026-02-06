@@ -43,7 +43,7 @@ class AppFixtures extends Fixture
 
         // Create Categories
         $categories = [];
-        $categoryNames = ['Technology', 'Lifestyle', 'Programming', 'Web Development', 'Design'];
+        $categoryNames = ['Technologie', 'Lifestyle', 'Programmation', 'Développement Web', 'Design'];
         
         foreach ($categoryNames as $name) {
             $category = new Category();

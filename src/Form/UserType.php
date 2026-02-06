@@ -19,17 +19,17 @@ class UserType extends AbstractType
                 'label' => 'Email',
             ])
             ->add('firstName', TextType::class, [
-                'label' => 'First Name',
+                'label' => 'Prénom',
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'Last Name',
+                'label' => 'Nom',
             ])
             ->add('profilePicture', TextType::class, [
-                'label' => 'Profile Picture URL',
+                'label' => 'URL de la photo de profil',
                 'required' => false,
             ])
             ->add('isActive', CheckboxType::class, [
-                'label' => 'Account Active',
+                'label' => 'Compte actif',
                 'required' => false,
             ])
         ;

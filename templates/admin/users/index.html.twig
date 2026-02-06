@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Manage Users - MyBlog{% endblock %}
+{% block title %}Gestion des Utilisateurs - MyBlog{% endblock %}
 
 {% block body %}
 <div class="row">
     <div class="col-lg-12 mx-auto">
-        <h1 class="mb-4">Manage Users</h1>
+        <h1 class="mb-4">Gestion des Utilisateurs</h1>
 
         {% if users %}
             <div class="table-responsive">
@@ -13,11 +13,11 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Email</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Role</th>
-                            <th>Posts</th>
-                            <th>Joined</th>
+                            <th>Nom</th>
+                            <th>Statut</th>
+                            <th>Rôle</th>
+                            <th>Articles</th>
+                            <th>Inscrit le</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -43,9 +43,9 @@
                                 <td>
                                     <span class="badge bg-info">{{ user.posts|length }}</span>
                                 </td>
-                                <td>{{ user.createdAt|date('M d, Y') }}</td>
+                                <td>{{ user.createdAt|date('d/m/Y') }}</td>
                                 <td>
-                                    <a href="{{ path('app_admin_user_show', {id: user.id}) }}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{{ path('app_admin_user_show', {id: user.id}) }}" class="btn btn-sm btn-info">Voir</a>
                                     <form method="post" action="{{ path('app_admin_user_toggle_active', {id: user.id}) }}" style="display:inline;">
                                         <input type="hidden" name="_token" value="{{ csrf_token('toggle_active' ~ user.id) }}">
                                         {% if user.isActive() %}
@@ -57,14 +57,14 @@
                                     <form method="post" action="{{ path('app_admin_user_toggle_admin', {id: user.id}) }}" style="display:inline;">
                                         <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ user.id) }}">
                                         {% if 'ROLE_ADMIN' in user.roles %}
-                                            <button type="submit" class="btn btn-sm btn-warning">Remove Admin</button>
+                                            <button type="submit" class="btn btn-sm btn-warning">Retirer Admin</button>
                                         {% else %}
-                                            <button type="submit" class="btn btn-sm btn-success">Make Admin</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Promouvoir Admin</button>
                                         {% endif %}
                                     </form>
                                     <form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}" style="display:inline;">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr ?')">Supprimer</button>
                                     </form>
                                 </td>
                             </tr>
@@ -74,7 +74,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                No users yet.
+                Aucun utilisateur pour le moment.
             </div>
         {% endif %}
     </div>
