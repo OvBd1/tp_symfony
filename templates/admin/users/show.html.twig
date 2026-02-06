@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.firstName }} {{ user.lastName }} - MyBlog{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        {% if user.profilePicture %}
+                            <img src="{{ user.profilePicture }}" class="img-fluid rounded" alt="{{ user.firstName }}">
+                        {% else %}
+                            <div class="bg-secondary text-white rounded d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-person fs-1"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p>
+                            <strong>Role:</strong>
+                            {% if 'ROLE_ADMIN' in user.roles %}
+                                <span class="badge bg-danger">Admin</span>
+                            {% else %}
+                                <span class="badge bg-primary">User</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>Member Since:</strong> {{ user.createdAt|date('F d, Y') }}</p>
+                        <p><strong>Total Posts:</strong> {{ user.posts|length }}</p>
+                        <p><strong>Total Comments:</strong> {{ user.comments|length }}</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="btn-group" role="group">
+                    <form method="post" action="{{ path('app_admin_user_toggle_admin', {id: user.id}) }}" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ user.id) }}">
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <button type="submit" class="btn btn-warning">Remove Admin</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-success">Make Admin</button>
+                        {% endif %}
+                    </form>
+                    <form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- User's Posts -->
+        <h3 class="mb-3">Posts by {{ user.firstName }}</h3>
+        {% if user.posts %}
+            <div class="list-group mb-4">
+                {% for post in user.posts %}
+                    <a href="{{ path('app_post_show', {id: post.id}) }}" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">{{ post.title }}</h5>
+                        <small class="text-muted">{{ post.publishedAt|date('M d, Y') }}</small>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No posts yet.</p>
+        {% endif %}
+
+        <!-- User's Comments -->
+        <h3 class="mb-3">Comments by {{ user.firstName }}</h3>
+        {% if user.comments %}
+            <div class="list-group">
+                {% for comment in user.comments %}
+                    <div class="list-group-item">
+                        <small class="text-muted">On <a href="{{ path('app_post_show', {id: comment.post.id}) }}">{{ comment.post.title }}</a></small>
+                        <p class="mb-1">{{ comment.content|slice(0, 100) }}...</p>
+                        <small class="text-muted">{{ comment.createdAt|date('M d, Y H:i') }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No comments yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

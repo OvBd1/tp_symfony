@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Moderate Comments - MyBlog{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <h1 class="mb-4">Moderate Comments</h1>
+
+        {% if comments %}
+            <div class="card-group">
+                {% for comment in comments %}
+                    <div class="card mb-3">
+                        <div class="card-header bg-warning">
+                            <strong>{{ comment.author.firstName }} {{ comment.author.lastName }}</strong> on 
+                            <a href="{{ path('app_post_show', {id: comment.post.id}) }}">{{ comment.post.title }}</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ comment.content }}</p>
+                            <small class="text-muted">{{ comment.createdAt|date('M d, Y H:i') }}</small>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <form method="post" action="{{ path('app_comment_approve', {id: comment.id}) }}" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('approve' ~ comment.id) }}">
+                                <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                            </form>
+                            <form method="post" action="{{ path('app_comment_delete', {id: comment.id}) }}" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Reject</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                No pending comments to moderate! 🎉
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
