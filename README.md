@@ -91,19 +91,19 @@ DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&ch
 ### 4. Créer la base de données
 
 ```bash
-php bin/console doctrine:database:create
+symfony console doctrine:database:create
 ```
 
 ### 5. Exécuter les migrations
 
 ```bash
-php bin/console doctrine:migrations:migrate
+symfony console doctrine:migrations:migrate
 ```
 
 ### 6. Charger les fixtures (données de test)
 
 ```bash
-php bin/console app:load-fixtures
+symfony console app:load-fixtures
 ```
 
 ### 7. Lancer le serveur de développement
