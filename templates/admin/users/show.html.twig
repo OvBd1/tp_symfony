@@ -21,6 +21,14 @@
                         <h2>{{ user.firstName }} {{ user.lastName }}</h2>
                         <p><strong>Email:</strong> {{ user.email }}</p>
                         <p>
+                            <strong>Status:</strong>
+                            {% if user.isActive() %}
+                                <span class="badge bg-success">Actif</span>
+                            {% else %}
+                                <span class="badge bg-danger">Désactivé</span>
+                            {% endif %}
+                        </p>
+                        <p>
                             <strong>Role:</strong>
                             {% if 'ROLE_ADMIN' in user.roles %}
                                 <span class="badge bg-danger">Admin</span>
@@ -37,6 +45,14 @@
                 <hr>
 
                 <div class="btn-group" role="group">
+                    <form method="post" action="{{ path('app_admin_user_toggle_active', {id: user.id}) }}" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('toggle_active' ~ user.id) }}">
+                        {% if user.isActive() %}
+                            <button type="submit" class="btn btn-warning">Désactiver le compte</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-success">Activer le compte</button>
+                        {% endif %}
+                    </form>
                     <form method="post" action="{{ path('app_admin_user_toggle_admin', {id: user.id}) }}" style="display:inline;">
                         <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ user.id) }}">
                         {% if 'ROLE_ADMIN' in user.roles %}
